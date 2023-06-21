@@ -1,0 +1,84 @@
+<div class="container mt-4">
+   <h2>Canciones</h2>
+ 
+   <!-- Formulario para crear/editar un item -->
+   <form novalidate (ngSubmit)="currentItem._id ? updateItem(currentItem._id, currentItem) : createItem(currentItem)" class="row g-3 needs-validation was-validated">
+
+    <div class="form-group has-validation">
+      <label for="name">Imagen:</label>
+      <input type="text" class="form-control" [(ngModel)]="currentItem.image" name="image" required>
+      <div class="invalid-feedback">
+        Por favor, ingresa una URL de imagen.
+      </div>
+    </div>
+
+    <div class="form-group col-md-3 has-validation">
+      <label for="name">Nombre:</label>
+      <input type="text" class="form-control" [(ngModel)]="currentItem.name" name="name" required>
+      <div class="invalid-feedback">
+        Por favor, elije un nombre.
+      </div>
+    </div>
+ 
+    <div class="form-group col-md-3 has-validation">
+      <label for="description">Duración:</label>
+      <input type="text" class="form-control" [(ngModel)]="currentItem.duration" name="duration" required>
+      <div class="invalid-feedback">
+        Por favor, ingresa una duración.
+      </div>
+    </div>
+
+    <div class="form-group col-md-3 has-validation">
+      <label for="description">Artista:</label>
+      <input type="text" class="form-control" [(ngModel)]="currentItem.artist" name="artist" required>
+      <div class="invalid-feedback">
+        Por favor, ingresa un artista.
+      </div>
+    </div>
+
+    <div class="form-group col-md-3 has-validation">
+      <label for="description">Año:</label>
+      <input type="number" class="form-control" [(ngModel)]="currentItem.year" name="year" pattern="[0-9]{4}" id="year" required>
+      <div class="invalid-feedback">
+        Ingrese un número de 4 dígitos.
+      </div>
+    </div>
+ 
+    <button type="submit" class="btn btn-primary">{{currentItem._id ? 'Update' : 'Add'}}</button>
+   </form>
+ 
+   <hr>
+    <div class=" card row mt-4 p-5">
+      <div class="col-md-12">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Buscar por nombre">
+      </div>
+    </div>
+   <hr>
+ 
+   <!-- Lista de items -->
+   <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Imagen</th>
+        <th>Duración</th>
+        <th>Artista</th>
+        <th>Año</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+     <tbody>
+       <tr *ngFor="let item of items | filter: searchTerm">
+         <td>{{ item.name }}</td>
+         <td><img src="{{ item.image }}" width="100"/></td>
+         <td>{{ item.duration }}</td>
+         <td>{{ item.artist }}</td>
+         <td>{{ item.year }}</td>
+         <td>
+           <button class="btn btn-sm btn-primary" (click)="editItem(item._id)">Edit</button>
+           <button class="btn btn-sm btn-danger" (click)="deleteItem(item._id)">Delete</button>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
